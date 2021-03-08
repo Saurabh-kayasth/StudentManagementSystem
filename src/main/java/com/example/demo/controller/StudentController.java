@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.example.demo.model.Student;
 import com.example.demo.service.student.StudentServiceImpl;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +30,13 @@ public class StudentController {
 
     @PostMapping(path = "/students",consumes = "application/json")
     public void addStudent(@RequestBody Student studentDTO) throws IOException {
-		studentService.addStudent(studentDTO);
+
+        // mapping studentDTO to Map
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.convertValue(studentDTO, new TypeReference<Map<String, Object>>() {});
+        System.out.println(map.get("name"));
+        
+        studentService.addStudent(studentDTO);
     }
 
     @GetMapping(path = "/students/{studentId}")
@@ -39,7 +48,8 @@ public class StudentController {
     @GetMapping(path = "/students")
     public List<Student> getStudents(){
         System.out.println("hello world");
-        return studentService.getStudents();
+        List<Student> students = studentService.getStudents();
+        return students;
         // return "hello";
     }
     
