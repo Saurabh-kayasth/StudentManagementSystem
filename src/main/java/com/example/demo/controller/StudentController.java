@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+// import java.util.Map;
 import java.util.Optional;
 
 import com.example.demo.model.Student;
@@ -33,7 +34,7 @@ public class StudentController {
 
         // mapping studentDTO to Map
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.convertValue(studentDTO, new TypeReference<Map<String, Object>>() {});
+        HashMap<String, String> map = mapper.convertValue(studentDTO, new TypeReference<HashMap<String, String>>() {});
         System.out.println(map.get("name"));
         
         studentService.addStudent(studentDTO);
